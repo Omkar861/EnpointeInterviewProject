@@ -100,15 +100,18 @@ fixtures/setup.js
 Example:
 
 ```json
-{
-  "city": "Mumbai",
-  "user": {
-    "firstName": "test",
-    "lastName": "test",
-    "email": "test@gmail.com",
-    "phone": "1234567890"
-  }
-}
+import {test as base} from '@playwright/test'
+
+export const test = base.extend({
+    dashboardPg: async({page},use)=>{
+        await page.goto("/");
+
+        await use(page);
+
+        await page.close();
+    }
+
+})
 ```
 
 ## Setup Instructions
@@ -145,7 +148,7 @@ npx playwright test --headed
 npx playwright test tests/bookingflowsss.spec.js
 ```
 
-## Report
+## Reports
 
 Playwright HTML report is enabled.
 
@@ -157,13 +160,6 @@ npx allure generate --output allure-report
 npx allure open allure-report          
 ```
 
-## Debugging
-
-Run test in debug mode:
-
-```bash
-npx playwright test --debug
-```
 
 ## Assumptions
 
