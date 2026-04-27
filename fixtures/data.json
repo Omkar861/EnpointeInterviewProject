@@ -1,0 +1,9 @@
+{
+  "city": "Mumbai",
+  "user": {
+    "firstName": "test",
+    "lastName": "test",
+    "email": "test@gmail.com",
+    "phone": "1234567890"
+  }
+}
