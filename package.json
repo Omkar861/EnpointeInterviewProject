@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "test": "npx playwright test",
-  "test:headed": "npx playwright test --headed",
-  "report": "npx playwright show-report"
-},
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "report": "npx playwright show-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.5.2"
+    "@types/node": "^25.5.2",
+    "allure": "^3.6.2",
+    "allure-playwright": "^3.7.1"
   }
 }

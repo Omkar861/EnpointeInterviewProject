@@ -27,15 +27,18 @@ No payment is performed.
 - JavaScript
 - Page Object Model (POM)
 - JSON fixtures
-- Playwright HTML report
+- Playwright reports
 
 ## Project Structure
 
 ```txt
 EnpointeInterviewProject/
 │
-├── fixtures/
+├── configures/
 │   └── data.json
+|
+├── fixtures/
+│   └── setup.js
 │
 ├── pages/
 │   ├── HomePage.js
@@ -86,12 +89,12 @@ const seatResponse = page.waitForResponse(response =>
 
 This helps validate that the seat-related API responds successfully during the booking flow.
 
-## Fixtures / Test Data
+## Fixtures / Setup File
 
-Test data is stored in:
+setup are stored in:
 
 ```txt
-Fixtures/data.json
+fixtures/setup.js
 ```
 
 Example:
@@ -146,10 +149,12 @@ npx playwright test tests/bookingflowsss.spec.js
 
 Playwright HTML report is enabled.
 
-After test execution, open the report using:
+After test execution, open the 3 types of report using:
 
 ```bash
 npx playwright show-report
+npx allure generate --output allure-report
+npx allure open allure-report          
 ```
 
 ## Debugging
