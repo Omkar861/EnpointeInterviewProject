@@ -99,7 +99,7 @@ fixtures/setup.js
 
 Example:
 
-```json
+```js
 import {test as base} from '@playwright/test'
 
 export const test = base.extend({
