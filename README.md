@@ -1,85 +1,176 @@
-# Introduction 
+## Introduction
+Hello My name is Omkar Dalvi.
+This project automates the cinepolis India movie booking flow using **Playwright with JavaScript**.
 
-Hello My name is Omkar Dalvi. I built an automation script using Playwright to compare hotel prices across multiple platforms like Booking.com, Agoda, and EaseMyTrip.
+## Application Under Test
 
-The goal was to find the lowest price for a 5-night stay for a given city. I first used Booking.com to identify the top-rated 5-star hotel, then searched for the same hotel on other platforms and extracted their prices.
+https://www.cinepolisindia.com
 
-Since each website has a different UI and structure, I handled them separately using modular functions. I also implemented dynamic date selection and handled autosuggest dropdowns by matching hotel names instead of relying on fixed positions.
+## Automation Scope
 
-Finally, I compared the extracted prices and returned the platform offering the lowest price.
+The automated flow covers:
 
+- City selection
+- Movie browsing
+- First available movie selection
+- First available showtime selection
+- Seat selection
+- Booking details / guest checkout flow
+- Booking summary validation
+- Negative validation for reserved seats
 
-# Objective
-
-Find the **lowest listing price** for a 5-night stay (future dates) for:
-- 2 adults
-- 1 infant (age < 2)
-
-for the **highest-rated 5-star hotel** in a given city.
-
----
-
-# Websites Used
-
-- Booking.com → To identify the top-rated hotel  
-- Agoda → To fetch price  
-- EaseMyTrip → To fetch price  
-
----
+No payment is performed.
 
 ## Tech Stack
 
-- JavaScript
-- Node.js
 - Playwright
-
----
-
-## How It Works
-1. Set city name in main file.
-2. Search city on Booking.com  
-3. Apply filters (5-star, top-rated)  
-4. Extract hotel name  
-5. Search same hotel on other platforms  
-6. Fetch prices from each site  
-7. Compare and print lowest price  
-
----
-
-## Dynamic Handling
-
-- Dates are generated dynamically (future + 5 nights)
-- Handles autosuggest dropdown using text matching
-- Works across different cities (e.g., Mumbai, Delhi)
-
----
+- JavaScript
+- Page Object Model (POM)
+- JSON fixtures
+- Playwright HTML report
 
 ## Project Structure
-tests/
-│── booking.js
-│── agoda.js
-│── easymytrip.js
-│── main.js
-│── utils.js
-│── setups/
-│ └── browsersetup.js
-│── Config/
-│ └── urls.js
 
+```txt
+EnpointeInterviewProject/
+│
+├── fixtures/
+│   └── data.json
+│
+├── pages/
+│   ├── HomePage.js
+│   ├── MoviePage.js
+│   ├── SeatPage.js
+│   └── CheckoutPage.js
+│
+├── tests/
+│   └── bookingflowsss.spec.js
+│
+├── playwright.config.js
+├── package.json
+└── README.md
+```
 
----
+## Test Scenarios Covered
 
-## Run the Project
+### 1. Positive Scenario
 
-----bash-----
-node tests/main.js
+**cinepolis booking flow**
 
+This test verifies that a user can:
 
-## Sample Output
-Hotel: Hyatt Centric MG Road Bangalore
-Booking → ₹ 53,250
-Agoda → Rs. 10,650
-EasymyTrip → ₹ 21,266
-Lowest Price:
-Website: Agoda
-Price: Rs. 10,650
+1. Open the cinepolis India website
+2. Select a city
+3. Select the first available movie
+4. Select the first available showtime
+5. Select an available seat
+6. Proceed to guest details
+7. Fill guest details
+8. Verify booking details are displayed
+
+### 2. Negative Scenario
+
+**User should NOT be able to select reserved seat**
+
+This test verifies that reserved seats remain reserved and cannot be selected by the user.
+
+## API Interception
+
+The positive flow includes API response monitoring before selecting the showtime:
+
+```js
+const seatResponse = page.waitForResponse(response =>
+  response.url().includes('seat') && response.status() === 200
+);
+```
+
+This helps validate that the seat-related API responds successfully during the booking flow.
+
+## Fixtures / Test Data
+
+Test data is stored in:
+
+```txt
+Fixtures/data.json
+```
+
+Example:
+
+```json
+{
+  "city": "Mumbai",
+  "user": {
+    "firstName": "test",
+    "lastName": "test",
+    "email": "test@gmail.com",
+    "phone": "1234567890"
+  }
+}
+```
+
+## Setup Instructions
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Install Playwright browsers
+
+```bash
+npx playwright install
+```
+
+## How to Run Tests
+
+### Run all tests
+
+```bash
+npx playwright test
+```
+
+### Run tests in headed mode
+
+```bash
+npx playwright test --headed
+```
+
+### Run a specific test file
+
+```bash
+npx playwright test tests/bookingflowsss.spec.js
+```
+
+## Report
+
+Playwright HTML report is enabled.
+
+After test execution, open the report using:
+
+```bash
+npx playwright show-report
+```
+
+## Debugging
+
+Run test in debug mode:
+
+```bash
+npx playwright test --debug
+```
+
+## Assumptions
+
+- The first available movie is selected dynamically.
+- The first available showtime is selected dynamically.
+- The first available seat is selected based on the available seat SVG class.
+- Payment flow is not automated as per assignment requirement.
+- Website content such as movies, showtimes, and seats can change dynamically.
+
+## Notes
+
+- No hard waits should be used in the final version.
+- Page Object Model is used to keep the framework clean and maintainable.
+- Test data is separated from test logic using JSON fixtures.
+- Playwright report and screenshots are used for debugging and result analysis.
