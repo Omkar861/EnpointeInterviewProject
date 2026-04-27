@@ -31,7 +31,7 @@ test('Cinepolis booking flow', async ({ dashboardPg }) => {
   await expect(checkout.BookingSummary()).toBeVisible();
 });
 
-test.only('User should NOT be able to select reserved seat', async ({ dashboardPg }) => {
+test('User should NOT be able to select reserved seat', async ({ dashboardPg }) => {
 
   const home = new HomePage(dashboardPg);
    await home.selectCity(data.city);
