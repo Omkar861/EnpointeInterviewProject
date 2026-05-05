@@ -1,15 +1,16 @@
-import {test as base} from '@playwright/test'
+const base = require('@playwright/test');
+const data = require('../configures/data.json');
+const HomePage = require('../pages/HomePage');
 
-export const test = base.extend({
-    dashboardPg: async({page},use)=>{
-        await page.goto("/");
-    
+exports.test = base.test.extend({
+  homePage: async ({ page }, use) => {
+    const home = new HomePage(page);
 
-        await use(page);
+    await home.open();
+    await home.selectCity(data.city);
 
-        await page.close();
-    }
+    await use({ page, home });
+  }
+});
 
-
-
-})
+exports.expect = base.expect;

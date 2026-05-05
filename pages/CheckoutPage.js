@@ -3,8 +3,11 @@ class CheckoutPage {
     this.page = page;
   }
 
-  async acceptAndContinue() {
-    await this.page.getByRole('button', { name: 'Accept & Proceed' }).click();
+
+  
+  async CancelTransation(){
+   await  this.page.locator(`span:has-text("Back")`).click();
+   await this.page.getByText('YES', { exact: true }).click();
   }
 
   async fillGuestDetails(user) {
