@@ -6,7 +6,7 @@ class CheckoutPage {
 
   
   async CancelTransation(){
-   await  this.page.locator(`span:has-text("Back")`).click();
+   await  this.page.getByText('Back', { exact: true }).click();
    await this.page.getByText('YES', { exact: true }).click();
   }
 
